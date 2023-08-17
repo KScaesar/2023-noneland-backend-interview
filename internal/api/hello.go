@@ -1,19 +1,22 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+
+	"noneland/backend/interview/internal/app"
 )
 
-func HelloHandler(c *gin.Context) {
+func NewUserHandler(service *app.UserUseCase) *UserHandler {
+	return &UserHandler{service: service}
+}
 
-	// use repo sample
-	//repo, err := di.NewRepo()
-	//if err != nil {
-	//	errResponse(c)
-	//	return
-	//}
-	//users, err := repo.GetUsers()
+type UserHandler struct {
+	service *app.UserUseCase
+}
 
+func (h *UserHandler) Hello(c *gin.Context) {
+	h.service.Hello()
 	c.JSON(http.StatusOK, okResponse{OK: true})
 }

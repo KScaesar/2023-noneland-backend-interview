@@ -7,45 +7,22 @@
 package di
 
 import (
-	gorm2 "gorm.io/gorm"
+	"github.com/gin-gonic/gin"
+
 	"noneland/backend/interview/configs"
-	"noneland/backend/interview/internal/db"
-	"noneland/backend/interview/internal/entity"
-	"noneland/backend/interview/internal/repo/gorm"
-	"sync"
+	"noneland/backend/interview/internal/api"
+	"noneland/backend/interview/internal/app"
+	"noneland/backend/interview/internal/pkg"
+	"noneland/backend/interview/internal/repo/xGorm"
 )
 
 // Injectors from wire.go:
 
-func NewRepo() (entity.Repository, error) {
-	db := NewDB()
-	config := NewConfig()
-	repository := gorm.NewRepository(db, config)
-	return repository, nil
-}
-
-// wire.go:
-
-var cg *configs.Config
-
-var configOnce sync.Once
-
-func NewConfig() *configs.Config {
-	configOnce.Do(func() {
-		cg = configs.NewConfig()
-	})
-
-	return cg
-}
-
-var database *gorm2.DB
-
-var dbOnce sync.Once
-
-func NewDB() *gorm2.DB {
-	dbOnce.Do(func() {
-		database = db.NewDb()
-	})
-
-	return database
+func NewGin(cfg *configs.Config) *gin.Engine {
+	gormDB := pkg.NewSqliteGorm()
+	userRepository := xGorm.NewUserRepository(gormDB, cfg)
+	userUseCase := app.NewUserUseCase(userRepository)
+	userHandler := api.NewUserHandler(userUseCase)
+	engine := pkg.NewGin(cfg, userHandler)
+	return engine
 }

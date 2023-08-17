@@ -4,37 +4,26 @@
 package di
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
-	"gorm.io/gorm"
+
 	"noneland/backend/interview/configs"
-	"noneland/backend/interview/internal/db"
-	"noneland/backend/interview/internal/entity"
-	repo "noneland/backend/interview/internal/repo/gorm"
-	"sync"
+	"noneland/backend/interview/internal/pkg"
 )
 
-var cg *configs.Config
-var configOnce sync.Once
+//go:generate wire gen
 
-func NewConfig() *configs.Config {
-	configOnce.Do(func() {
-		cg = configs.NewConfig()
-	})
+// 移除具有 side effect 的全域變數
+// global variable 是 testing 的萬惡之首
+// 所有元件都要用注入的方式建構
 
-	return cg
-}
-
-var database *gorm.DB
-var dbOnce sync.Once
-
-func NewDB() *gorm.DB {
-	dbOnce.Do(func() {
-		database = db.NewDb()
-	})
-
-	return database
-}
-
-func NewRepo() (entity.Repository, error) {
-	panic(wire.Build(repo.NewRepository, NewDB, NewConfig))
+func NewGin(cfg *configs.Config) *gin.Engine {
+	panic(
+		wire.Build(
+			InfrastructureLayer,
+			ApplicationLayer,
+			HttpAdapterLayer,
+			pkg.NewGin,
+		),
+	)
 }
