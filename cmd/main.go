@@ -20,8 +20,6 @@ func main() {
 
 	var mux http.Handler
 	switch env {
-	case "stage":
-		mux = engine
 	case "prod":
 		mux = pkg.SetupHttp2(engine)
 	}
