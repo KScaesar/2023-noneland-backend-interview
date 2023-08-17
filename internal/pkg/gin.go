@@ -20,8 +20,8 @@ func NewGin(
 	cfg *configs.Config,
 	userH *api.UserHandler,
 ) *gin.Engine {
-	if cfg.Mode == "debug" {
-		gin.SetMode(gin.DebugMode)
+	if cfg.Mode == "prod" {
+		gin.SetMode(gin.ReleaseMode)
 	}
 
 	r := gin.New()
