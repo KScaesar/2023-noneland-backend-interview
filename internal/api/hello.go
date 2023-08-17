@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"noneland/backend/interview/internal/app"
-	"noneland/backend/interview/internal/pkg"
+	"noneland/backend/interview/pkg"
 )
 
 func NewUserHandler(service *app.UserUseCase) *UserHandler {

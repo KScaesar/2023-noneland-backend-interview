@@ -6,8 +6,8 @@ import (
 	"noneland/backend/interview/internal/api"
 	"noneland/backend/interview/internal/app"
 	"noneland/backend/interview/internal/entity"
-	"noneland/backend/interview/internal/pkg"
 	"noneland/backend/interview/internal/repo/xGorm"
+	"noneland/backend/interview/pkg"
 )
 
 // gorm 不想重複名稱, 避免讀程式碼的時候誤會

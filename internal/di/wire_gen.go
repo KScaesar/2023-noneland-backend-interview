@@ -8,11 +8,12 @@ package di
 
 import (
 	"github.com/gin-gonic/gin"
+
 	"noneland/backend/interview/configs"
 	"noneland/backend/interview/internal/api"
 	"noneland/backend/interview/internal/app"
-	"noneland/backend/interview/internal/pkg"
 	"noneland/backend/interview/internal/repo/xGorm"
+	"noneland/backend/interview/pkg"
 )
 
 // Injectors from wire.go:

@@ -8,7 +8,7 @@ import (
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 
-	"noneland/backend/interview/internal/pkg/errors"
+	"noneland/backend/interview/pkg/errors"
 )
 
 // SetupHttp2 為了分成測試用與正式用，所以把 gin 的初始化抽出來

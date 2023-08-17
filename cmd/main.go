@@ -9,7 +9,7 @@ import (
 
 	"noneland/backend/interview/configs"
 	"noneland/backend/interview/internal/di"
-	"noneland/backend/interview/internal/pkg"
+	"noneland/backend/interview/pkg"
 )
 
 func main() {
