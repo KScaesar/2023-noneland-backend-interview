@@ -8,7 +8,7 @@ import (
 	"github.com/google/wire"
 
 	"noneland/backend/interview/configs"
-	"noneland/backend/interview/internal/pkg"
+	"noneland/backend/interview/internal/api"
 )
 
 //go:generate wire gen
@@ -23,7 +23,7 @@ func NewGin(cfg *configs.Config) *gin.Engine {
 			InfrastructureLayer,
 			ApplicationLayer,
 			HttpAdapterLayer,
-			pkg.NewGin,
+			api.NewGin,
 		),
 	)
 }

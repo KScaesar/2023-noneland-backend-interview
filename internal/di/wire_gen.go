@@ -8,7 +8,6 @@ package di
 
 import (
 	"github.com/gin-gonic/gin"
-
 	"noneland/backend/interview/configs"
 	"noneland/backend/interview/internal/api"
 	"noneland/backend/interview/internal/app"
@@ -19,10 +18,10 @@ import (
 // Injectors from wire.go:
 
 func NewGin(cfg *configs.Config) *gin.Engine {
-	gormDB := pkg.NewSqliteGorm()
-	userRepository := xGorm.NewUserRepository(gormDB, cfg)
+	db := pkg.NewSqliteGorm()
+	userRepository := xGorm.NewUserRepository(db, cfg)
 	userUseCase := app.NewUserUseCase(userRepository)
 	userHandler := api.NewUserHandler(userUseCase)
-	engine := pkg.NewGin(cfg, userHandler)
+	engine := api.NewGin(cfg, userHandler)
 	return engine
 }
