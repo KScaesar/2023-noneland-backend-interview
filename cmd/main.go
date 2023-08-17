@@ -22,6 +22,8 @@ func main() {
 	switch env {
 	case "prod":
 		mux = pkg.SetupHttp2(engine)
+	default:
+		mux = engine
 	}
 
 	s := &http.Server{
