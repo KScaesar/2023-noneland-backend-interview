@@ -15,10 +15,10 @@ func NewGin(
 	}
 
 	r := gin.New()
-	apiGroup := r.Group("/api")
+	v1 := r.Group("api/v1")
 
 	// TODO: api router
-	apiGroup.GET("hello", userH.Hello)
+	v1.GET("hello", userH.Hello)
 
 	return r
 }
