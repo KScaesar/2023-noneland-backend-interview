@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"noneland/backend/interview/internal/app"
+	"noneland/backend/interview/internal/pkg"
 )
 
 func NewUserHandler(service *app.UserUseCase) *UserHandler {
@@ -18,5 +19,5 @@ type UserHandler struct {
 
 func (h *UserHandler) Hello(c *gin.Context) {
 	h.service.Hello()
-	c.JSON(http.StatusOK, okResponse{OK: true})
+	pkg.ReplySuccessResponse(c, http.StatusOK, nil)
 }
