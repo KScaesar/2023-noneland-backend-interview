@@ -35,6 +35,11 @@ var (
 		900,
 		http.StatusInternalServerError,
 	)
+	ErrTimeout = NewCustomError(
+		"system time out",
+		910,
+		http.StatusInternalServerError,
+	)
 
 	ErrUnknown3rdParty = NewCustomError(
 		"unknown third party",

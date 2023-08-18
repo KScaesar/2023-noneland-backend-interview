@@ -16,6 +16,8 @@ type Config struct {
 
 	DebugHttp     bool `configs:"debug_http"`
 	DebugDatabase bool `configs:"debug_database"`
+
+	ExchangeUrl string `configs:"exchange_url"`
 }
 
 // NewConfig 為了在寫測試的時候, 可以方便抽換設定值

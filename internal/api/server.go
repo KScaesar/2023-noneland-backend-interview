@@ -51,10 +51,12 @@ func setupServer(router *gin.Engine, cfg *configs.Config) *http.Server {
 func registerRoute(router *gin.Engine, hg HandlerGroup) {
 	v1 := router.Group("/api/v1")
 
-	// TODO: api router
-	v1.GET("/hello", hg.UserH.Hello)
+	v1.GET("/hello", hg.UserHandler.Hello)
+
+	v1.GET("exchange/summary/balance", hg.ExchangeHandler.GetSummaryBalance)
 }
 
 type HandlerGroup struct {
-	UserH UserHandler
+	ExchangeHandler
+	UserHandler
 }

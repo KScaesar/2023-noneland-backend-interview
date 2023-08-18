@@ -12,18 +12,23 @@ import (
 	"noneland/backend/interview/internal/api"
 	"noneland/backend/interview/internal/app"
 	"noneland/backend/interview/internal/database"
+	"noneland/backend/interview/internal/external"
 	"noneland/backend/interview/pkg"
 )
 
 // Injectors from wire.go:
 
 func NewServer(cfg *configs.Config) *http.Server {
+	client := pkg.NewHttpClient()
+	httpExchangeQryService := external.NewHttpExchangeQryService(client, cfg)
+	exchangeHandler := api.NewExchangeHandler(httpExchangeQryService)
 	db := pkg.NewSqliteGorm()
 	userRepository := database.NewUserRepository(db, cfg)
 	userUseCase := app.NewUserUseCase(userRepository)
 	userHandler := api.NewUserHandler(userUseCase)
 	handlerGroup := api.HandlerGroup{
-		UserH: userHandler,
+		ExchangeHandler: exchangeHandler,
+		UserHandler:     userHandler,
 	}
 	server := api.NewServer(cfg, handlerGroup)
 	return server
