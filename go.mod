@@ -5,7 +5,9 @@ go 1.20
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/glebarez/sqlite v1.9.0
+	github.com/go-playground/validator/v10 v10.14.0
 	github.com/google/wire v0.5.0
+	github.com/shopspring/decimal v1.3.1
 	github.com/spf13/viper v1.16.0
 	golang.org/x/net v0.10.0
 	gorm.io/gorm v1.25.2
@@ -21,7 +23,6 @@ require (
 	github.com/glebarez/go-sqlite v1.21.2 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.14.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
