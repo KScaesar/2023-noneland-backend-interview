@@ -5,21 +5,18 @@ import (
 
 	"noneland/backend/interview/internal/api"
 	"noneland/backend/interview/internal/app"
+	"noneland/backend/interview/internal/database"
 	"noneland/backend/interview/internal/entity"
-	"noneland/backend/interview/internal/repo/xGorm"
 	"noneland/backend/interview/pkg"
 )
-
-// gorm 不想重複名稱, 避免讀程式碼的時候誤會
-// 所以改名 xGorm
 
 var InfrastructureLayer = wire.NewSet(
 	pkg.NewSqliteGorm,
 )
 
 var ApplicationLayer = wire.NewSet(
-	xGorm.NewUserRepository,
-	wire.Bind(new(entity.UserRepository), new(*xGorm.UserRepository)),
+	database.NewUserRepository,
+	wire.Bind(new(entity.UserRepository), new(*database.UserRepository)),
 	app.NewUserUseCase,
 )
 

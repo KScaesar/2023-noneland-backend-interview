@@ -1,4 +1,4 @@
-package xGorm
+package database
 
 import (
 	"gorm.io/gorm"

@@ -8,11 +8,10 @@ package di
 
 import (
 	"github.com/gin-gonic/gin"
-
 	"noneland/backend/interview/configs"
 	"noneland/backend/interview/internal/api"
 	"noneland/backend/interview/internal/app"
-	"noneland/backend/interview/internal/repo/xGorm"
+	"noneland/backend/interview/internal/database"
 	"noneland/backend/interview/pkg"
 )
 
@@ -20,7 +19,7 @@ import (
 
 func NewGin(cfg *configs.Config) *gin.Engine {
 	db := pkg.NewSqliteGorm()
-	userRepository := xGorm.NewUserRepository(db, cfg)
+	userRepository := database.NewUserRepository(db, cfg)
 	userUseCase := app.NewUserUseCase(userRepository)
 	userHandler := api.NewUserHandler(userUseCase)
 	engine := api.NewGin(cfg, userHandler)
