@@ -12,7 +12,7 @@ import (
 func main() {
 	env := os.Getenv("ENV")
 	env = "template-dev" // 範例用途, 理想上應該是從環境變數讀到 local, dev, test, stage, prod
-	cfg := configs.NewConfigFromFilename(env)
+	cfg := configs.NewConfig(env)
 	server := di.NewServer(cfg)
 	// fmt.Println(cfg)
 
