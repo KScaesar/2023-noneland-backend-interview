@@ -7,16 +7,19 @@
 │   ├── di          <-- Composition Root
 │   ├ 
 │   ├                   特定商業邏輯的程式碼, 類似 Clean Architecture
-│   ├── api         <-- Adapter Layer & Framework & Driver  
+│   ├── api         <-- http restful.   Adapter Layer & Framework & Driver  
 │   ├── app         <-- Use Case Layer
 │   ├── entity      <-- Entity Layer
-│   └── database    <-- Adapter Layer & Framework & Driver  
+│   ├── external    <-- 3rd party api.  Adapter Layer & Framework & Driver  
+│   └── database    <-- gorm.           Adapter Layer & Framework & Driver  
 │
-└── pkg             <-- tool package: 類似 AOP 精神, 用於所有公司專案的程式碼
+└── pkg             <-- tool package: 類似 AOP 精神, 用於公司所有專案的程式碼
      ├── errors
+     ├── config.go
      ├── db.go
      ├── gin.go
      ├── general_dto.go
+     ├── http_client.go
      └── validator.go
 ```
 
