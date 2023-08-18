@@ -10,16 +10,17 @@ import (
 	"noneland/backend/interview/pkg"
 )
 
-var InfrastructureLayer = wire.NewSet(
-	pkg.NewSqliteGorm,
-)
-
-var ApplicationLayer = wire.NewSet(
-	database.NewUserRepository,
-	wire.Bind(new(entity.UserRepository), new(*database.UserRepository)),
-	app.NewUserUseCase,
-)
-
-var HttpAdapterLayer = wire.NewSet(
-	api.NewUserHandler,
+var (
+	InfrastructureLayer = wire.NewSet(
+		pkg.NewSqliteGorm,
+	)
+	ApplicationLayer = wire.NewSet(
+		database.NewUserRepository,
+		wire.Bind(new(entity.UserRepository), new(*database.UserRepository)),
+		app.NewUserUseCase,
+	)
+	HttpAdapterLayer = wire.NewSet(
+		api.NewUserHandler,
+		wire.Struct(new(api.HandlerGroup), "*"),
+	)
 )

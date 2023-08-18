@@ -13,8 +13,12 @@ import (
 var directory embed.FS
 
 type Config struct {
-	Port string
-	Mode string
+	Port        string
+	LogLevel    string
+	EnableHttp2 bool
+
+	DebugHttp     bool
+	DebugDatabase bool
 }
 
 // NewConfigFromFilename 為了在寫測試的時候, 可以方便抽換設定值
@@ -38,13 +42,10 @@ func NewConfigFromFilename(filename string) *Config {
 		panic(fmt.Sprintf("讀取設定檔出現錯誤，原因為：%v", err))
 	}
 	return &Config{
-		Port: viper.GetString("port"),
-		Mode: viper.GetString("mode"),
+		Port:          viper.GetString("port"),
+		LogLevel:      viper.GetString("log_level"),
+		EnableHttp2:   viper.GetBool("enable_http2"),
+		DebugHttp:     viper.GetBool("debug_http"),
+		DebugDatabase: viper.GetBool("debug_database"),
 	}
-}
-
-func NewConfig() *Config {
-	// filename := os.Getenv("ENV")
-	filename := "template-dev"
-	return NewConfigFromFilename(filename)
 }

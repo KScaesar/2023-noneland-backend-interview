@@ -7,7 +7,7 @@
 package di
 
 import (
-	"github.com/gin-gonic/gin"
+	"net/http"
 	"noneland/backend/interview/configs"
 	"noneland/backend/interview/internal/api"
 	"noneland/backend/interview/internal/app"
@@ -17,11 +17,14 @@ import (
 
 // Injectors from wire.go:
 
-func NewGin(cfg *configs.Config) *gin.Engine {
+func NewServer(cfg *configs.Config) *http.Server {
 	db := pkg.NewSqliteGorm()
 	userRepository := database.NewUserRepository(db, cfg)
 	userUseCase := app.NewUserUseCase(userRepository)
 	userHandler := api.NewUserHandler(userUseCase)
-	engine := api.NewGin(cfg, userHandler)
-	return engine
+	handlerGroup := api.HandlerGroup{
+		UserH: userHandler,
+	}
+	server := api.NewServer(cfg, handlerGroup)
+	return server
 }
