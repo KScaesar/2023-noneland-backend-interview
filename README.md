@@ -1,5 +1,25 @@
 # 2023 noneland backend interview
 
+## project layout
+
+```text
+├── internal
+│   ├── di          <-- Composition Root
+│   ├ 
+│   ├                   特定商業邏輯的程式碼, 類似 Clean Architecture
+│   ├── api         <-- Adapter Layer & Framework & Driver  
+│   ├── app         <-- Use Case Layer
+│   ├── entity      <-- Entity Layer
+│   └── database    <-- Adapter Layer & Framework & Driver  
+│
+└── pkg             <-- tool package: 類似 AOP 精神, 用於所有公司專案的程式碼
+     ├── errors
+     ├── db.go
+     ├── gin.go
+     ├── general_dto.go
+     └── validator.go
+```
+
 ## 前情提要
 
 你現在在處理交易所風控後台的新 api 開設，以下有 `本次測驗需要新增的兩隻 api 規格`
