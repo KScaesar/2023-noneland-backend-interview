@@ -8,6 +8,8 @@ import (
 	"noneland/backend/interview/pkg"
 )
 
+//go:generate mockery --name ExchangeQryService --filename exchange_service.go --output ../mocks --with-expecter --quiet
+
 type ExchangeQryService interface {
 	GetBalanceByUserId(ctx context.Context, usrId string) (BalanceResponse, error)
 

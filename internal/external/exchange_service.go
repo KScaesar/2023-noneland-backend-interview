@@ -39,7 +39,11 @@ func (svc *HttpExchangeQryService) GetBalanceByUserId(ctx context.Context, usrId
 		var err error
 		err = retry.Do(
 			func() error {
-				payload, err = pkg.HttpGetJsonBody[balance](svc.client, svc.url+"/spot/balance")
+				req, err := http.NewRequest(http.MethodGet, svc.url+"/spot/balance", nil)
+				if err != nil {
+					return err
+				}
+				payload, err = pkg.HttpDoReturnType[balance](svc.client, req)
 				return err
 			},
 			retry.Attempts(3),
@@ -51,7 +55,11 @@ func (svc *HttpExchangeQryService) GetBalanceByUserId(ctx context.Context, usrId
 		var err error
 		err = retry.Do(
 			func() error {
-				payload, err = pkg.HttpGetJsonBody[balance](svc.client, svc.url+"/futures/balance")
+				req, err := http.NewRequest(http.MethodGet, svc.url+"/futures/balance", nil)
+				if err != nil {
+					return err
+				}
+				payload, err = pkg.HttpDoReturnType[balance](svc.client, req)
 				return err
 			},
 			retry.Attempts(3),

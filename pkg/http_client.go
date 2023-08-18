@@ -10,10 +10,25 @@ import (
 	"noneland/backend/interview/pkg/errors"
 )
 
-func HttpGetJsonBody[T any](client *http.Client, url string) (T, error) {
+func HttpDoReturnString(client *http.Client, req *http.Request) (body string, resp *http.Response, err error) {
+	resp, err = client.Do(req)
+	if err != nil {
+		return "", nil, errors.Join3rdParty(errors.ErrSystem, err)
+	}
+	defer resp.Body.Close()
+
+	buf, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", nil, errors.Join3rdParty(errors.ErrSystem, err)
+	}
+
+	return string(buf), resp, nil
+}
+
+func HttpDoReturnType[T any](client *http.Client, req *http.Request) (T, error) {
 	data := new(T)
 
-	resp, err := client.Get(url)
+	resp, err := client.Do(req)
 	if err != nil {
 		return *data, errors.Join3rdParty(errors.ErrSystem, err)
 	}

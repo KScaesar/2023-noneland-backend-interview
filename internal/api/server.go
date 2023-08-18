@@ -53,7 +53,7 @@ func registerRoute(router *gin.Engine, hg HandlerGroup) {
 
 	v1.GET("/hello", hg.UserHandler.Hello)
 
-	v1.GET("exchange/summary/balance", hg.ExchangeHandler.GetSummaryBalance)
+	v1.GET("/exchange/summary/balance", hg.ExchangeHandler.GetSummaryBalance)
 }
 
 type HandlerGroup struct {
