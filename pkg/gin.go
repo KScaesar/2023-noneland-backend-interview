@@ -51,7 +51,7 @@ func ValidateDtoRequest(c *gin.Context, obj any) bool {
 
 func ReplyErrorResponse(c *gin.Context, err error) {
 	customError, _ := errors.ExtractCustomError(err)
-	resp := &Response{
+	resp := &HttpResponse{
 		Code:    customError.MyCode(),
 		Message: err.Error(),
 		Payload: struct{}{},
@@ -64,7 +64,7 @@ func ReplySuccessResponse(c *gin.Context, httpCode int, payload any) {
 	if payload == nil {
 		payload = struct{}{}
 	}
-	resp := &Response{
+	resp := &HttpResponse{
 		Code:    0,
 		Message: "ok",
 		Payload: payload,
@@ -72,7 +72,7 @@ func ReplySuccessResponse(c *gin.Context, httpCode int, payload any) {
 	c.JSON(httpCode, resp)
 }
 
-type Response struct {
+type HttpResponse struct {
 	Code    int    `json:"code"`
 	Message string `json:"msg"`
 	Payload any    `json:"payload"`
