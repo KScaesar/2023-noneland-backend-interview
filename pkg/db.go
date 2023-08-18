@@ -6,6 +6,8 @@ import (
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+
+	"noneland/backend/interview/pkg/errors"
 )
 
 func NewSqliteGorm() *gorm.DB {
@@ -23,4 +25,18 @@ func NewSqliteGorm() *gorm.DB {
 
 func NewMySqlGorm() *gorm.DB {
 	return nil
+}
+
+func GormError(err error) error {
+	// var pgErr *pgconn.PgError
+	// if errors.As(err, &pgErr) {
+	// 	return PgsqlError(pgErr)
+	// }
+
+	switch {
+	case errors.Is(err, gorm.ErrRecordNotFound):
+		return errors.ErrNotFound
+	default:
+		return errors.Join3rdParty(errors.ErrSystem, err)
+	}
 }
