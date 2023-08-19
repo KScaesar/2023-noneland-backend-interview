@@ -12,7 +12,7 @@ type ExchangeQryService interface {
 	GetBalanceByUserId(ctx context.Context, usrId string) (BalanceResponse, error)
 
 	GetTransactionListByUserId(
-		ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThanEqual,
+		ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan,
 	) (
 		pkg.ListResponse[TransactionResponse], error,
 	)
@@ -24,10 +24,10 @@ type BalanceResponse struct {
 }
 
 type TransactionResponse struct {
-	Amount    decimal.Decimal `json:"amount"`
-	Asset     string          `json:"asset"`
-	Status    string          `json:"status"`
-	Timestamp int             `json:"timestamp"`
-	TxId      int64           `json:"txId"`
-	Type      string          `json:"type"`
+	TxId      int64  `json:"txId"`
+	Amount    string `json:"amount"`
+	Asset     string `json:"asset"`
+	Status    string `json:"status"`
+	Timestamp int    `json:"timestamp"`
+	Type      string `json:"type"`
 }

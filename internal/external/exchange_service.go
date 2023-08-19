@@ -3,8 +3,10 @@ package external
 import (
 	"context"
 	"net/http"
+	"net/url"
 
 	"github.com/avast/retry-go/v4"
+	"github.com/google/go-querystring/query"
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 
@@ -78,10 +80,45 @@ func (svc *HttpExchangeQryService) GetBalanceByUserId(ctx context.Context, usrId
 	return
 }
 
-func (HttpExchangeQryService) GetTransactionListByUserId(
-	ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThanEqual,
-) (pkg.ListResponse[app.TransactionResponse], error,
+func (svc *HttpExchangeQryService) GetTransactionListByUserId(
+	_ context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan,
+) (
+	resp pkg.ListResponse[app.TransactionResponse], Err error,
 ) {
-	// TODO implement me
-	panic("implement me")
+
+	qs := svc.transformQueryString(dtoPage, tRange)
+	qryErr := retry.Do(
+		func() error {
+			req, err := http.NewRequest(http.MethodGet, svc.url+"/spot/transfer/records?"+qs.Encode(), nil)
+			if err != nil {
+				return errors.Join3rdParty(errors.ErrSystem, err)
+			}
+			resp, err = pkg.HttpDoReturnType[pkg.ListResponse[app.TransactionResponse]](svc.client, req)
+			return err
+		},
+		retry.Attempts(3),
+	)
+	if qryErr != nil {
+		return pkg.ListResponse[app.TransactionResponse]{}, errors.WrapWithMessage(qryErr, "call 3rd exchange api")
+	}
+	return
+}
+
+func (svc *HttpExchangeQryService) transformQueryString(page pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan) url.Values {
+	type QueryString struct {
+		StartTime int64  `url:"startTime,omitempty"`
+		EndTime   int64  `url:"endTime,omitempty"`
+		Current   uint64 `url:"current,omitempty"`
+		Size      uint64 `url:"size,omitempty"`
+	}
+
+	page.SetDefaultAndMaxSizeIfInvalid(10, 100)
+	qs := QueryString{
+		StartTime: tRange.StartTime,
+		EndTime:   tRange.EndTime,
+		Current:   page.Page,
+		Size:      page.Size,
+	}
+	values, _ := query.Values(qs)
+	return values
 }

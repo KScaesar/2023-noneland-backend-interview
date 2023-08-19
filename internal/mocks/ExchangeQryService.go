@@ -78,21 +78,21 @@ func (_c *MockExchangeQryService_GetBalanceByUserId_Call) RunAndReturn(run func(
 }
 
 // GetTransactionListByUserId provides a mock function with given fields: ctx, userId, dtoPage, tRange
-func (_m *MockExchangeQryService) GetTransactionListByUserId(ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThanEqual) (pkg.ListResponse[app.TransactionResponse], error) {
+func (_m *MockExchangeQryService) GetTransactionListByUserId(ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan) (pkg.ListResponse[app.TransactionResponse], error) {
 	ret := _m.Called(ctx, userId, dtoPage, tRange)
 
 	var r0 pkg.ListResponse[app.TransactionResponse]
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, string, pkg.PageParam, pkg.TimestampRangeEndTimeLessThanEqual) (pkg.ListResponse[app.TransactionResponse], error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string, pkg.PageParam, pkg.TimestampRangeEndTimeLessThan) (pkg.ListResponse[app.TransactionResponse], error)); ok {
 		return rf(ctx, userId, dtoPage, tRange)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string, pkg.PageParam, pkg.TimestampRangeEndTimeLessThanEqual) pkg.ListResponse[app.TransactionResponse]); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string, pkg.PageParam, pkg.TimestampRangeEndTimeLessThan) pkg.ListResponse[app.TransactionResponse]); ok {
 		r0 = rf(ctx, userId, dtoPage, tRange)
 	} else {
 		r0 = ret.Get(0).(pkg.ListResponse[app.TransactionResponse])
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, string, pkg.PageParam, pkg.TimestampRangeEndTimeLessThanEqual) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, string, pkg.PageParam, pkg.TimestampRangeEndTimeLessThan) error); ok {
 		r1 = rf(ctx, userId, dtoPage, tRange)
 	} else {
 		r1 = ret.Error(1)
@@ -110,14 +110,14 @@ type MockExchangeQryService_GetTransactionListByUserId_Call struct {
 //   - ctx context.Context
 //   - userId string
 //   - dtoPage pkg.PageParam
-//   - tRange pkg.TimestampRangeEndTimeLessThanEqual
+//   - tRange pkg.TimestampRangeEndTimeLessThan
 func (_e *MockExchangeQryService_Expecter) GetTransactionListByUserId(ctx interface{}, userId interface{}, dtoPage interface{}, tRange interface{}) *MockExchangeQryService_GetTransactionListByUserId_Call {
 	return &MockExchangeQryService_GetTransactionListByUserId_Call{Call: _e.mock.On("GetTransactionListByUserId", ctx, userId, dtoPage, tRange)}
 }
 
-func (_c *MockExchangeQryService_GetTransactionListByUserId_Call) Run(run func(ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThanEqual)) *MockExchangeQryService_GetTransactionListByUserId_Call {
+func (_c *MockExchangeQryService_GetTransactionListByUserId_Call) Run(run func(ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan)) *MockExchangeQryService_GetTransactionListByUserId_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(pkg.PageParam), args[3].(pkg.TimestampRangeEndTimeLessThanEqual))
+		run(args[0].(context.Context), args[1].(string), args[2].(pkg.PageParam), args[3].(pkg.TimestampRangeEndTimeLessThan))
 	})
 	return _c
 }
@@ -127,7 +127,7 @@ func (_c *MockExchangeQryService_GetTransactionListByUserId_Call) Return(_a0 pkg
 	return _c
 }
 
-func (_c *MockExchangeQryService_GetTransactionListByUserId_Call) RunAndReturn(run func(context.Context, string, pkg.PageParam, pkg.TimestampRangeEndTimeLessThanEqual) (pkg.ListResponse[app.TransactionResponse], error)) *MockExchangeQryService_GetTransactionListByUserId_Call {
+func (_c *MockExchangeQryService_GetTransactionListByUserId_Call) RunAndReturn(run func(context.Context, string, pkg.PageParam, pkg.TimestampRangeEndTimeLessThan) (pkg.ListResponse[app.TransactionResponse], error)) *MockExchangeQryService_GetTransactionListByUserId_Call {
 	_c.Call.Return(run)
 	return _c
 }

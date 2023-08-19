@@ -24,8 +24,8 @@ type ListResponse[T any] struct {
 //
 
 type PageParam struct {
-	Page uint64 `json:"current" form:"current"`
-	Size uint64 `json:"size" form:"size"`
+	Page uint64 `json:"current" form:"current" url:"page"`
+	Size uint64 `json:"size" form:"size" url:"size"`
 }
 
 func (p PageParam) Validate() error {
