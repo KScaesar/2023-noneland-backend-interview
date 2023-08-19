@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"noneland/backend/interview/configs"
-	"noneland/backend/interview/internal/app"
+	"noneland/backend/interview/internal/entity"
 	"noneland/backend/interview/pkg"
 )
 
@@ -41,7 +41,7 @@ func TestHttpExchangeQryService_GetBalanceByUserId(t *testing.T) {
 
 	//
 
-	expectedResp := app.BalanceResponse{
+	expectedResp := entity.BalanceResponse{
 		SpotFee:    decimal.NewFromFloat32(10.12345),
 		FuturesFee: decimal.NewFromFloat32(10.145),
 	}
@@ -111,8 +111,8 @@ func TestHttpExchangeQryService_GetTransactionListByUserId(t *testing.T) {
 }
 `))
 
-	want := pkg.ListResponse[app.TransactionResponse]{
-		Rows: []app.TransactionResponse{
+	want := pkg.ListResponse[entity.TransactionResponse]{
+		Rows: []entity.TransactionResponse{
 			{
 				Amount:    "0.10000000",
 				Asset:     "BNB",

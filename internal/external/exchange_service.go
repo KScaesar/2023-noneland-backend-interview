@@ -11,7 +11,7 @@ import (
 	"github.com/shopspring/decimal"
 
 	"noneland/backend/interview/configs"
-	"noneland/backend/interview/internal/app"
+	"noneland/backend/interview/internal/entity"
 	"noneland/backend/interview/pkg"
 	"noneland/backend/interview/pkg/errors"
 )
@@ -28,7 +28,7 @@ type HttpExchangeQryService struct {
 	url    string
 }
 
-func (svc *HttpExchangeQryService) GetBalanceByUserId(ctx context.Context, usrId string) (resp app.BalanceResponse, Err error) {
+func (svc *HttpExchangeQryService) GetBalanceByUserId(ctx context.Context, usrId string) (resp entity.BalanceResponse, Err error) {
 	type balance struct {
 		Free decimal.Decimal `json:"free"`
 	}
@@ -63,18 +63,18 @@ func (svc *HttpExchangeQryService) GetBalanceByUserId(ctx context.Context, usrId
 		select {
 		case spot := <-mqSpot:
 			if spot.B != nil {
-				return app.BalanceResponse{}, spot.B
+				return entity.BalanceResponse{}, spot.B
 			}
 			resp.SpotFee = spot.A
 
 		case future := <-mqFuture:
 			if future.B != nil {
-				return app.BalanceResponse{}, future.B
+				return entity.BalanceResponse{}, future.B
 			}
 			resp.FuturesFee = future.A
 
 		case <-ctx.Done():
-			return app.BalanceResponse{}, errors.Join3rdParty(errors.ErrSystem, ctx.Err())
+			return entity.BalanceResponse{}, errors.Join3rdParty(errors.ErrSystem, ctx.Err())
 		}
 	}
 	return
@@ -83,7 +83,7 @@ func (svc *HttpExchangeQryService) GetBalanceByUserId(ctx context.Context, usrId
 func (svc *HttpExchangeQryService) GetTransactionListByUserId(
 	_ context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan,
 ) (
-	resp pkg.ListResponse[app.TransactionResponse], Err error,
+	resp pkg.ListResponse[entity.TransactionResponse], Err error,
 ) {
 
 	qs := svc.transformQueryString(dtoPage, tRange)
@@ -93,13 +93,13 @@ func (svc *HttpExchangeQryService) GetTransactionListByUserId(
 			if err != nil {
 				return errors.Join3rdParty(errors.ErrSystem, err)
 			}
-			resp, err = pkg.HttpDoReturnType[pkg.ListResponse[app.TransactionResponse]](svc.client, req)
+			resp, err = pkg.HttpDoReturnType[pkg.ListResponse[entity.TransactionResponse]](svc.client, req)
 			return err
 		},
 		retry.Attempts(3),
 	)
 	if qryErr != nil {
-		return pkg.ListResponse[app.TransactionResponse]{}, errors.WrapWithMessage(qryErr, "call 3rd exchange api")
+		return pkg.ListResponse[entity.TransactionResponse]{}, errors.WrapWithMessage(qryErr, "call 3rd exchange api")
 	}
 	return
 }

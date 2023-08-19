@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"noneland/backend/interview/configs"
-	"noneland/backend/interview/internal/app"
+	"noneland/backend/interview/internal/entity"
 	"noneland/backend/interview/internal/mocks"
 	"noneland/backend/interview/pkg"
 )
@@ -23,7 +23,7 @@ func TestExchangeHandler_GetSummaryBalance(t *testing.T) {
 	}
 	router := NewRouter(cfg, hg)
 
-	expectedBalance := app.BalanceResponse{
+	expectedBalance := entity.BalanceResponse{
 		SpotFee:    decimal.NewFromFloat(123.456),
 		FuturesFee: decimal.NewFromFloat(12.456),
 	}
