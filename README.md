@@ -26,10 +26,10 @@
 ## 作答結果
 
 **一般**  
-- [ok] 回傳兩種餘額 `{url}/exchange/summary/balance`
+- [ok] 回傳兩種餘額 `{url}/api/v1/exchange/summary/balance`
    - [test code](./internal/api/exchange_test.go#L33)
    - [impl code](./internal/external/exchange_service.go#L31)
-- [▲] 需要顯示 `現貨` 帳戶轉出轉入紀錄 `{url}/exchange/spot/transactions`
+- [▲] 需要顯示 `現貨` 帳戶轉出轉入紀錄 `{url}/api/v1/exchange/spot/transactions`
    - 完成一半, 不了解情境, 無法作答
    - [impl code](./internal/app/tx_backup.go#L27)
 
