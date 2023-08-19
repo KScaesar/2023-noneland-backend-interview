@@ -80,7 +80,7 @@ func (svc *HttpExchangeQryService) GetBalanceByUserId(ctx context.Context, usrId
 	return
 }
 
-func (svc *HttpExchangeQryService) GetTransactionListByUserId(
+func (svc *HttpExchangeQryService) GetSpotTransactionListByUserId(
 	_ context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan,
 ) (
 	resp pkg.ListResponse[entity.ExchangeTransactionResponse], Err error,

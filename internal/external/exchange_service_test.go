@@ -141,7 +141,7 @@ func TestHttpExchangeQryService_GetTransactionListByUserId(t *testing.T) {
 		Total: 3,
 	}
 
-	got, err := service.GetTransactionListByUserId(ctx, usrId, page, tRange)
+	got, err := service.GetSpotTransactionListByUserId(ctx, usrId, page, tRange)
 
 	require.NoError(t, err)
 	require.Equal(t, want, got)

@@ -10,7 +10,7 @@ import (
 type ExchangeQryService interface {
 	GetBalanceByUserId(ctx context.Context, usrId string) (entity.BalanceResponse, error)
 
-	GetTransactionListByUserId(
+	GetSpotTransactionListByUserId(
 		ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan,
 	) (
 		pkg.ListResponse[entity.ExchangeTransactionResponse], error,
