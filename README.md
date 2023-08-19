@@ -23,6 +23,22 @@
      └── validator.go
 ```
 
+## 作答結果
+
+**一般**  
+- [ok] 回傳兩種餘額 `{url}/exchange/summary/balance`
+   - [test code](./internal/api/exchange_test.go#L33)
+   - [impl code](./internal/external/exchange_service.go#L31)
+- [▲] 需要顯示 `現貨` 帳戶轉出轉入紀錄 `{url}/exchange/spot/transactions`
+   - 完成一半, 不了解情境, 無法作答
+   - [impl code](./internal/app/tx_backup.go#L27)
+
+**加分**  
+- [fail] 後台的呼叫不應該影響報價邏輯
+   - 看完公司回覆還是覺得不可能做到, 可能我誤解使用情境
+- [ok] 請撰寫可被測試的程式碼
+- [ok] 架構調整
+
 ## 前情提要
 
 你現在在處理交易所風控後台的新 api 開設，以下有 `本次測驗需要新增的兩隻 api 規格`
