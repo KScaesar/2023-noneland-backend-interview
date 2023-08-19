@@ -15,3 +15,4 @@ packages:
   noneland/backend/interview/internal/entity:
     interfaces:
       UserRepository:
+      TransactionBackupRepository:

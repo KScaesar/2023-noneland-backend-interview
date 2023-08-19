@@ -17,9 +17,9 @@ import (
 
 func TestExchangeHandler_GetSummaryBalance(t *testing.T) {
 	cfg := &configs.Config{}
-	mockSvc := mocks.NewMockExchangeQryService(t)
+	mockExService := mocks.NewMockExchangeQryService(t)
 	hg := HandlerGroup{
-		ExchangeHandler: NewExchangeHandler(mockSvc),
+		ExchangeHandler: NewExchangeHandler(mockExService, nil),
 	}
 	router := NewRouter(cfg, hg)
 
@@ -28,9 +28,9 @@ func TestExchangeHandler_GetSummaryBalance(t *testing.T) {
 		FuturesFee: decimal.NewFromFloat(12.456),
 	}
 
-	// mockSvc.On("GetBalanceByUserId", mock.Anything, mock.AnythingOfType("string")).
+	// mockExService.On("GetBalanceByUserId", mock.Anything, mock.AnythingOfType("string")).
 	// 	Return(expectedBalance, nil)
-	mockSvc.EXPECT().
+	mockExService.EXPECT().
 		GetBalanceByUserId(mock.Anything, mock.AnythingOfType("string")).
 		Return(expectedBalance, nil)
 

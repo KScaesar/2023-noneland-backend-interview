@@ -13,11 +13,11 @@ type UserUseCase struct {
 }
 
 func (uc *UserUseCase) Hello() {
-	// use repo sample
-	// repo, err := di.NewRepo()
+	// use backupRepo sample
+	// backupRepo, err := di.NewRepo()
 	// if err != nil {
 	//	errResponse(c)
 	//	return
 	// }
-	// users, err := repo.GetUsers()
+	// users, err := backupRepo.GetUsers()
 }

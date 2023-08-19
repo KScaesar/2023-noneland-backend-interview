@@ -111,8 +111,8 @@ func TestHttpExchangeQryService_GetTransactionListByUserId(t *testing.T) {
 }
 `))
 
-	want := pkg.ListResponse[entity.TransactionResponse]{
-		Rows: []entity.TransactionResponse{
+	want := pkg.ListResponse[entity.ExchangeTransactionResponse]{
+		Rows: []entity.ExchangeTransactionResponse{
 			{
 				Amount:    "0.10000000",
 				Asset:     "BNB",

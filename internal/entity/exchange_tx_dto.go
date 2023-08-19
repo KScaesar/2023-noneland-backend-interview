@@ -9,7 +9,7 @@ type BalanceResponse struct {
 	FuturesFee decimal.Decimal `json:"futures_fee"`
 }
 
-type TransactionResponse struct {
+type ExchangeTransactionResponse struct {
 	TxId      int64  `json:"txId"`
 	Amount    string `json:"amount"`
 	Asset     string `json:"asset"`

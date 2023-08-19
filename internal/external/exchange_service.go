@@ -83,7 +83,7 @@ func (svc *HttpExchangeQryService) GetBalanceByUserId(ctx context.Context, usrId
 func (svc *HttpExchangeQryService) GetTransactionListByUserId(
 	_ context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan,
 ) (
-	resp pkg.ListResponse[entity.TransactionResponse], Err error,
+	resp pkg.ListResponse[entity.ExchangeTransactionResponse], Err error,
 ) {
 
 	qs := svc.transformQueryString(dtoPage, tRange)
@@ -93,13 +93,13 @@ func (svc *HttpExchangeQryService) GetTransactionListByUserId(
 			if err != nil {
 				return errors.Join3rdParty(errors.ErrSystem, err)
 			}
-			resp, err = pkg.HttpDoReturnType[pkg.ListResponse[entity.TransactionResponse]](svc.client, req)
+			resp, err = pkg.HttpDoReturnType[pkg.ListResponse[entity.ExchangeTransactionResponse]](svc.client, req)
 			return err
 		},
 		retry.Attempts(3),
 	)
 	if qryErr != nil {
-		return pkg.ListResponse[entity.TransactionResponse]{}, errors.WrapWithMessage(qryErr, "call 3rd exchange api")
+		return pkg.ListResponse[entity.ExchangeTransactionResponse]{}, errors.WrapWithMessage(qryErr, "call 3rd exchange api")
 	}
 	return
 }

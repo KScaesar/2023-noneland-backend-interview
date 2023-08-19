@@ -17,6 +17,10 @@ var (
 		pkg.NewHttpClient,
 	)
 	ApplicationLayer = wire.NewSet(
+		database.NewGormTransactionBackupRepository,
+		wire.Bind(new(entity.TransactionBackupRepository), new(*database.GormTransactionBackupRepository)),
+		app.NewTransactionBackupUseCase,
+
 		external.NewHttpExchangeQryService,
 		wire.Bind(new(app.ExchangeQryService), new(*external.HttpExchangeQryService)),
 

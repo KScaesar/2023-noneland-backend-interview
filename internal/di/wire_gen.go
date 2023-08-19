@@ -21,8 +21,10 @@ import (
 func NewServer(cfg *configs.Config) *http.Server {
 	client := pkg.NewHttpClient()
 	httpExchangeQryService := external.NewHttpExchangeQryService(client, cfg)
-	exchangeHandler := api.NewExchangeHandler(httpExchangeQryService)
 	db := pkg.NewSqliteGorm()
+	gormTransactionBackupRepository := database.NewGormTransactionBackupRepository(db)
+	transactionBackupUseCase := app.NewTransactionBackupUseCase(gormTransactionBackupRepository, httpExchangeQryService)
+	exchangeHandler := api.NewExchangeHandler(httpExchangeQryService, transactionBackupUseCase)
 	userRepository := database.NewUserRepository(db, cfg)
 	userUseCase := app.NewUserUseCase(userRepository)
 	userHandler := api.NewUserHandler(userUseCase)

@@ -13,6 +13,6 @@ type ExchangeQryService interface {
 	GetTransactionListByUserId(
 		ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan,
 	) (
-		pkg.ListResponse[entity.TransactionResponse], error,
+		pkg.ListResponse[entity.ExchangeTransactionResponse], error,
 	)
 }
