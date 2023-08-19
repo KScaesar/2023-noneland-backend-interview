@@ -1,0 +1,17 @@
+# https://vektra.github.io/mockery/latest/configuration/#recommended-basic-config
+
+quiet: True
+with-expecter: true
+mockname: "Mock{{.InterfaceName}}"
+filename: "{{.InterfaceName}}.go"
+dir: "internal/mocks"
+outpkg: mocks
+
+packages:
+  noneland/backend/interview/internal/app:
+    interfaces:
+      ExchangeQryService:
+
+  noneland/backend/interview/internal/entity:
+    interfaces:
+      UserRepository:

@@ -17,7 +17,7 @@ import (
 
 func TestExchangeHandler_GetSummaryBalance(t *testing.T) {
 	cfg := &configs.Config{}
-	mockSvc := mocks.NewExchangeQryService(t)
+	mockSvc := mocks.NewMockExchangeQryService(t)
 	hg := HandlerGroup{
 		ExchangeHandler: NewExchangeHandler(mockSvc),
 	}
