@@ -33,41 +33,30 @@ func (svc *HttpExchangeQryService) GetBalanceByUserId(ctx context.Context, usrId
 
 	mqSpot := make(chan lo.Tuple2[decimal.Decimal, error], 1)
 	mqFuture := make(chan lo.Tuple2[decimal.Decimal, error], 1)
+	mqAll := []chan lo.Tuple2[decimal.Decimal, error]{mqSpot, mqFuture}
 
-	go func() {
-		var payload balance
-		var err error
-		err = retry.Do(
-			func() error {
-				req, err := http.NewRequest(http.MethodGet, svc.url+"/spot/balance", nil)
-				if err != nil {
-					return err
-				}
-				payload, err = pkg.HttpDoReturnType[balance](svc.client, req)
-				return err
-			},
-			retry.Attempts(3),
-		)
-		mqSpot <- lo.Tuple2[decimal.Decimal, error]{A: payload.Free, B: err}
-	}()
-	go func() {
-		var payload balance
-		var err error
-		err = retry.Do(
-			func() error {
-				req, err := http.NewRequest(http.MethodGet, svc.url+"/futures/balance", nil)
-				if err != nil {
-					return err
-				}
-				payload, err = pkg.HttpDoReturnType[balance](svc.client, req)
-				return err
-			},
-			retry.Attempts(3),
-		)
-		mqFuture <- lo.Tuple2[decimal.Decimal, error]{A: payload.Free, B: err}
-	}()
+	urlAll := []string{svc.url + "/spot/balance", svc.url + "/futures/balance"}
 
-	qryCount := 2
+	qryCount := len(urlAll)
+	for i := 0; i < qryCount; i++ {
+		go func(i int) {
+			var payload balance
+			var qryErr error
+			qryErr = retry.Do(
+				func() error {
+					req, err := http.NewRequest(http.MethodGet, urlAll[i], nil)
+					if err != nil {
+						return errors.Join3rdParty(errors.ErrSystem, err)
+					}
+					payload, err = pkg.HttpDoReturnType[balance](svc.client, req)
+					return err
+				},
+				retry.Attempts(3),
+			)
+			mqAll[i] <- lo.Tuple2[decimal.Decimal, error]{A: payload.Free, B: qryErr}
+		}(i)
+	}
+
 	for i := 0; i < qryCount; i++ {
 		select {
 		case spot := <-mqSpot:
@@ -83,7 +72,7 @@ func (svc *HttpExchangeQryService) GetBalanceByUserId(ctx context.Context, usrId
 			resp.FuturesFee = future.A
 
 		case <-ctx.Done():
-			return app.BalanceResponse{}, errors.ErrTimeout
+			return app.BalanceResponse{}, errors.Join3rdParty(errors.ErrSystem, ctx.Err())
 		}
 	}
 	return
