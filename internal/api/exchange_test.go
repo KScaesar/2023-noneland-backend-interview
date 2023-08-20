@@ -18,6 +18,7 @@ import (
 )
 
 func TestExchangeHandler_GetSummaryBalance(t *testing.T) {
+	t.Parallel()
 	// arrange
 	cfg := configs.NewConfig("template-dev")
 	cfg.DebugHttp = false

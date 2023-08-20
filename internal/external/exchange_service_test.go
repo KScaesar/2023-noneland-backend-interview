@@ -16,6 +16,7 @@ import (
 )
 
 func TestHttpExchangeQryService_GetBalanceByUserId(t *testing.T) {
+	t.Parallel()
 	// arrange
 	client := http.DefaultClient
 	cfg := configs.NewConfig("template-dev")
@@ -53,6 +54,7 @@ func TestHttpExchangeQryService_GetBalanceByUserId(t *testing.T) {
 }
 
 func TestHttpExchangeQryService_GetTransactionListByUserId(t *testing.T) {
+	t.Parallel()
 	// arrange
 	client := http.DefaultClient
 	cfg := configs.NewConfig("template-dev")
@@ -143,6 +145,7 @@ func TestHttpExchangeQryService_GetTransactionListByUserId(t *testing.T) {
 }
 
 func TestHttpExchangeQryService_transformQueryString(t *testing.T) {
+	t.Parallel()
 	// arrange
 	client := http.DefaultClient
 	cfg := configs.NewConfig("template-dev")
