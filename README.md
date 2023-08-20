@@ -25,17 +25,19 @@
 
 ## 作答結果
 
-**一般**  
-- [ok] 回傳兩種餘額 `{url}/api/v1/exchange/summary/balance`
-   - [impl code](./internal/external/exchange_service.go#L31)
-   - [test code](./internal/api/exchange_test.go#L20)
-- [▲] 需要顯示 `現貨` 帳戶轉出轉入紀錄 `{url}/api/v1/exchange/spot/transactions`
-   - 完成一半, 不了解情境, 無法作答
-   - [impl code](./internal/app/tx_backup.go#L27)
+**一般**
 
-**加分**  
+- [ok] 回傳兩種餘額 `{url}/api/v1/exchange/summary/balance`
+    - [impl code](./internal/external/exchange_service.go#L31)
+    - [test code](./internal/api/exchange_test.go#L20)
+- [▲] 需要顯示 `現貨` 帳戶轉出轉入紀錄 `{url}/api/v1/exchange/spot/transactions`
+    - 完成一半, 不了解情境, 無法作答
+    - [impl code](./internal/app/tx_backup.go#L27)
+
+**加分**
+
 - [fail] 後台的呼叫不應該影響報價邏輯
-   - 看完公司回覆還是覺得不可能做到, 可能我誤解使用情境
+    - 看完公司回覆還是覺得不可能做到, 可能我誤解使用情境
 - [ok] 請撰寫可被測試的程式碼
 - [ok] 架構調整
 
@@ -54,10 +56,10 @@
 ## 基本規格
 
 1. 第一隻 api，同時回傳兩種餘額
-   1. 需要顯示 `XX交易所` 的 `現貨` 帳戶 USDT 餘額
-   1. 需要顯示 `XX交易所` 的 `合約` 帳戶 USDT 餘額
+    1. 需要顯示 `XX交易所` 的 `現貨` 帳戶 USDT 餘額
+    1. 需要顯示 `XX交易所` 的 `合約` 帳戶 USDT 餘額
 2. 需要顯示 `現貨` 帳戶轉出轉入紀錄（`第三方XX交易所僅提供一個月內的交易紀錄查詢`）
-   1. 根據法律遵循，我們應該保存 `6年` 內的所有交易紀錄
+    1. 根據法律遵循，我們應該保存 `6年` 內的所有交易紀錄
 
 ```
 問題3
@@ -178,18 +180,18 @@ response:
   "timezone": "UTC",
   "serverTime": 1565246363776,
   "rateLimits": [
-     {
-        "rateLimitType": "REQUEST_WEIGHT",
-        "interval": "MINUTE",
-        "intervalNum": 1,
-        "limit": 1200
-     },
-     {
-        "rateLimitType": "RAW_REQUESTS",
-        "interval": "MINUTE",
-        "intervalNum": 5,
-        "limit": 6100
-     }
+    {
+      "rateLimitType": "REQUEST_WEIGHT",
+      "interval": "MINUTE",
+      "intervalNum": 1,
+      "limit": 1200
+    },
+    {
+      "rateLimitType": "RAW_REQUESTS",
+      "interval": "MINUTE",
+      "intervalNum": 5,
+      "limit": 6100
+    }
   ]
 }
 ```
@@ -231,13 +233,12 @@ api 權重：5
 
 request 參數：
 
-名稱 | 類型 | 是否必填 | 描述
-----|------|--------|---------
-startTime | LONG | NO |
-endTime | LONG | NO |
-endTime | LONG | NO |
-current | LONG | NO | 當前回傳頁數，預設為 1
-size | LONG | NO | 回傳筆數，預設 10，最大 100
+| 名稱        | 類型   | 是否必填 |        描述         |
+|-----------|------|------|:-----------------:|
+| startTime | LONG | NO   |                   |
+| endTime   | LONG | NO   |                   |
+| current   | LONG | NO   |   當前回傳頁數，預設為 1    |
+| size      | LONG | NO   | 回傳筆數，預設 10，最大 100 |
 
 Header: `Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==`
 
@@ -247,33 +248,33 @@ response:
 
 ```json
 {
-   "rows": [
-      {
-         "amount": "0.10000000",
-         "asset": "BNB",
-         "status": "CONFIRMED",
-         "timestamp": 1566898617,
-         "txId": 5240372201,
-         "type": "IN"
-      },
-      {
-         "amount": "5.00000000",
-         "asset": "USDT",
-         "status": "CONFIRMED",
-         "timestamp": 1566888436,
-         "txId": 5239810406,
-         "type": "OUT"
-      },
-      {
-         "amount": "1.00000000",
-         "asset": "EOS",
-         "status": "CONFIRMED",
-         "timestamp": 1566888403,
-         "txId": 5239808703,
-         "type": "IN"
-      }
-   ],
-   "total": 3
+  "rows": [
+    {
+      "amount": "0.10000000",
+      "asset": "BNB",
+      "status": "CONFIRMED",
+      "timestamp": 1566898617,
+      "txId": 5240372201,
+      "type": "IN"
+    },
+    {
+      "amount": "5.00000000",
+      "asset": "USDT",
+      "status": "CONFIRMED",
+      "timestamp": 1566888436,
+      "txId": 5239810406,
+      "type": "OUT"
+    },
+    {
+      "amount": "1.00000000",
+      "asset": "EOS",
+      "status": "CONFIRMED",
+      "timestamp": 1566888403,
+      "txId": 5239808703,
+      "type": "IN"
+    }
+  ],
+  "total": 3
 }
 ```
 
@@ -299,22 +300,21 @@ response:
   "timezone": "UTC",
   "serverTime": 1565246363776,
   "rateLimits": [
-     {
-        "rateLimitType": "REQUEST_WEIGHT",
-        "interval": "MINUTE",
-        "intervalNum": 1,
-        "limit": 1200
-     },
-     {
-        "rateLimitType": "RAW_REQUESTS",
-        "interval": "MINUTE",
-        "intervalNum": 5,
-        "limit": 6100
-     }
+    {
+      "rateLimitType": "REQUEST_WEIGHT",
+      "interval": "MINUTE",
+      "intervalNum": 1,
+      "limit": 1200
+    },
+    {
+      "rateLimitType": "RAW_REQUESTS",
+      "interval": "MINUTE",
+      "intervalNum": 5,
+      "limit": 6100
+    }
   ]
 }
 ```
-
 
 #### 取得合約帳戶餘額
 
