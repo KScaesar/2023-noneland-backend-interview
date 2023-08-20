@@ -10,8 +10,8 @@ import (
 	"noneland/backend/interview/pkg"
 )
 
-func NewExchangeHandler(exService app.ExchangeQryService, backupService *app.TransactionBackupUseCase) ExchangeHandler {
-	return ExchangeHandler{exService: exService, backupService: backupService}
+func NewExchangeHandler(svc app.ApplicationGroup) *ExchangeHandler {
+	return &ExchangeHandler{exService: svc.ExchangeQryService, backupService: svc.TransactionBackupUseCase}
 }
 
 type ExchangeHandler struct {

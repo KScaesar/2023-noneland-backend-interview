@@ -18,11 +18,11 @@ import (
 func TestExchangeHandler_GetSummaryBalance(t *testing.T) {
 	cfg := &configs.Config{}
 	mockExService := mocks.NewMockExchangeQryService(t)
-	hg := HandlerGroup{
-		ExchangeHandler: NewExchangeHandler(mockExService, nil),
-	}
-	router := NewRouter(cfg, hg)
-
+	apps := app.ApplicationGroup{ExchangeQryService: mockExService}
+	handlers := HandlerGroup{ExchangeHandler: NewExchangeHandler(apps)}
+	router := NewRouter(cfg, handlers)
+	ts := httptest.NewServer(router)
+	defer ts.Close()
 	expectedBalance := entity.BalanceResponse{
 		SpotFee:    decimal.NewFromFloat(123.456),
 		FuturesFee: decimal.NewFromFloat(12.456),

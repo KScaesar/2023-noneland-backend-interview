@@ -77,7 +77,7 @@ func (_c *MockExchangeQryService_GetBalanceByUserId_Call) RunAndReturn(run func(
 	return _c
 }
 
-// GetTransactionListByUserId provides a mock function with given fields: ctx, userId, dtoPage, tRange
+// GetSpotTransactionListByUserId provides a mock function with given fields: ctx, userId, dtoPage, tRange
 func (_m *MockExchangeQryService) GetSpotTransactionListByUserId(ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan) (pkg.ListResponse[entity.ExchangeTransactionResponse], error) {
 	ret := _m.Called(ctx, userId, dtoPage, tRange)
 
@@ -101,33 +101,33 @@ func (_m *MockExchangeQryService) GetSpotTransactionListByUserId(ctx context.Con
 	return r0, r1
 }
 
-// MockExchangeQryService_GetTransactionListByUserId_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetSpotTransactionListByUserId'
-type MockExchangeQryService_GetTransactionListByUserId_Call struct {
+// MockExchangeQryService_GetSpotTransactionListByUserId_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetSpotTransactionListByUserId'
+type MockExchangeQryService_GetSpotTransactionListByUserId_Call struct {
 	*mock.Call
 }
 
-// GetTransactionListByUserId is a helper method to define mock.On call
+// GetSpotTransactionListByUserId is a helper method to define mock.On call
 //   - ctx context.Context
 //   - userId string
 //   - dtoPage pkg.PageParam
 //   - tRange pkg.TimestampRangeEndTimeLessThan
-func (_e *MockExchangeQryService_Expecter) GetTransactionListByUserId(ctx interface{}, userId interface{}, dtoPage interface{}, tRange interface{}) *MockExchangeQryService_GetTransactionListByUserId_Call {
-	return &MockExchangeQryService_GetTransactionListByUserId_Call{Call: _e.mock.On("GetSpotTransactionListByUserId", ctx, userId, dtoPage, tRange)}
+func (_e *MockExchangeQryService_Expecter) GetSpotTransactionListByUserId(ctx interface{}, userId interface{}, dtoPage interface{}, tRange interface{}) *MockExchangeQryService_GetSpotTransactionListByUserId_Call {
+	return &MockExchangeQryService_GetSpotTransactionListByUserId_Call{Call: _e.mock.On("GetSpotTransactionListByUserId", ctx, userId, dtoPage, tRange)}
 }
 
-func (_c *MockExchangeQryService_GetTransactionListByUserId_Call) Run(run func(ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan)) *MockExchangeQryService_GetTransactionListByUserId_Call {
+func (_c *MockExchangeQryService_GetSpotTransactionListByUserId_Call) Run(run func(ctx context.Context, userId string, dtoPage pkg.PageParam, tRange pkg.TimestampRangeEndTimeLessThan)) *MockExchangeQryService_GetSpotTransactionListByUserId_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		run(args[0].(context.Context), args[1].(string), args[2].(pkg.PageParam), args[3].(pkg.TimestampRangeEndTimeLessThan))
 	})
 	return _c
 }
 
-func (_c *MockExchangeQryService_GetTransactionListByUserId_Call) Return(_a0 pkg.ListResponse[entity.ExchangeTransactionResponse], _a1 error) *MockExchangeQryService_GetTransactionListByUserId_Call {
+func (_c *MockExchangeQryService_GetSpotTransactionListByUserId_Call) Return(_a0 pkg.ListResponse[entity.ExchangeTransactionResponse], _a1 error) *MockExchangeQryService_GetSpotTransactionListByUserId_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockExchangeQryService_GetTransactionListByUserId_Call) RunAndReturn(run func(context.Context, string, pkg.PageParam, pkg.TimestampRangeEndTimeLessThan) (pkg.ListResponse[entity.ExchangeTransactionResponse], error)) *MockExchangeQryService_GetTransactionListByUserId_Call {
+func (_c *MockExchangeQryService_GetSpotTransactionListByUserId_Call) RunAndReturn(run func(context.Context, string, pkg.PageParam, pkg.TimestampRangeEndTimeLessThan) (pkg.ListResponse[entity.ExchangeTransactionResponse], error)) *MockExchangeQryService_GetSpotTransactionListByUserId_Call {
 	_c.Call.Return(run)
 	return _c
 }

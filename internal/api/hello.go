@@ -9,8 +9,8 @@ import (
 	"noneland/backend/interview/pkg"
 )
 
-func NewUserHandler(service *app.UserUseCase) UserHandler {
-	return UserHandler{service: service}
+func NewUserHandler(svc app.ApplicationGroup) *UserHandler {
+	return &UserHandler{service: svc.UserUseCase}
 }
 
 type UserHandler struct {

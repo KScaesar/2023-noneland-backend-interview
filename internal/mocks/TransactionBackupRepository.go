@@ -65,7 +65,7 @@ func (_c *MockTransactionBackupRepository_CreatBulkTransactionBackup_Call) RunAn
 	return _c
 }
 
-// GetTransactionBackupAllByUserId provides a mock function with given fields: ctx, dto
+// GetSpotTransactionBackupAllByUserId provides a mock function with given fields: ctx, dto
 func (_m *MockTransactionBackupRepository) GetSpotTransactionBackupAllByUserId(ctx context.Context, dto *entity.QryTransactionBackupParam) ([]entity.ExchangeTransactionResponse, error) {
 	ret := _m.Called(ctx, dto)
 
@@ -91,31 +91,31 @@ func (_m *MockTransactionBackupRepository) GetSpotTransactionBackupAllByUserId(c
 	return r0, r1
 }
 
-// MockTransactionBackupRepository_GetTransactionBackupAllByUserId_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetSpotTransactionBackupAllByUserId'
-type MockTransactionBackupRepository_GetTransactionBackupAllByUserId_Call struct {
+// MockTransactionBackupRepository_GetSpotTransactionBackupAllByUserId_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetSpotTransactionBackupAllByUserId'
+type MockTransactionBackupRepository_GetSpotTransactionBackupAllByUserId_Call struct {
 	*mock.Call
 }
 
-// GetTransactionBackupAllByUserId is a helper method to define mock.On call
+// GetSpotTransactionBackupAllByUserId is a helper method to define mock.On call
 //   - ctx context.Context
 //   - dto *entity.QryTransactionBackupParam
-func (_e *MockTransactionBackupRepository_Expecter) GetTransactionBackupAllByUserId(ctx interface{}, dto interface{}) *MockTransactionBackupRepository_GetTransactionBackupAllByUserId_Call {
-	return &MockTransactionBackupRepository_GetTransactionBackupAllByUserId_Call{Call: _e.mock.On("GetSpotTransactionBackupAllByUserId", ctx, dto)}
+func (_e *MockTransactionBackupRepository_Expecter) GetSpotTransactionBackupAllByUserId(ctx interface{}, dto interface{}) *MockTransactionBackupRepository_GetSpotTransactionBackupAllByUserId_Call {
+	return &MockTransactionBackupRepository_GetSpotTransactionBackupAllByUserId_Call{Call: _e.mock.On("GetSpotTransactionBackupAllByUserId", ctx, dto)}
 }
 
-func (_c *MockTransactionBackupRepository_GetTransactionBackupAllByUserId_Call) Run(run func(ctx context.Context, dto *entity.QryTransactionBackupParam)) *MockTransactionBackupRepository_GetTransactionBackupAllByUserId_Call {
+func (_c *MockTransactionBackupRepository_GetSpotTransactionBackupAllByUserId_Call) Run(run func(ctx context.Context, dto *entity.QryTransactionBackupParam)) *MockTransactionBackupRepository_GetSpotTransactionBackupAllByUserId_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		run(args[0].(context.Context), args[1].(*entity.QryTransactionBackupParam))
 	})
 	return _c
 }
 
-func (_c *MockTransactionBackupRepository_GetTransactionBackupAllByUserId_Call) Return(_a0 []entity.ExchangeTransactionResponse, _a1 error) *MockTransactionBackupRepository_GetTransactionBackupAllByUserId_Call {
+func (_c *MockTransactionBackupRepository_GetSpotTransactionBackupAllByUserId_Call) Return(_a0 []entity.ExchangeTransactionResponse, _a1 error) *MockTransactionBackupRepository_GetSpotTransactionBackupAllByUserId_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockTransactionBackupRepository_GetTransactionBackupAllByUserId_Call) RunAndReturn(run func(context.Context, *entity.QryTransactionBackupParam) ([]entity.ExchangeTransactionResponse, error)) *MockTransactionBackupRepository_GetTransactionBackupAllByUserId_Call {
+func (_c *MockTransactionBackupRepository_GetSpotTransactionBackupAllByUserId_Call) RunAndReturn(run func(context.Context, *entity.QryTransactionBackupParam) ([]entity.ExchangeTransactionResponse, error)) *MockTransactionBackupRepository_GetSpotTransactionBackupAllByUserId_Call {
 	_c.Call.Return(run)
 	return _c
 }

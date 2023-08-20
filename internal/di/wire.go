@@ -21,10 +21,22 @@ import (
 func NewServer(cfg *configs.Config) *http.Server {
 	panic(
 		wire.Build(
-			InfrastructureLayer,
-			ApplicationLayer,
-			HttpAdapterLayer,
+			Infrastructure,
+			Application,
+			HttpAdapter,
 			api.NewServer,
 		),
 	)
 }
+
+// 範例: 串接不同的驅動方式
+// func NewCommandRoot(cfg *configs.Config) *cobra.Command {
+// 	panic(
+// 		wire.Build(
+// 			Infrastructure,
+// 			Application,
+// 			CmdAdapter,
+// 			cmd.NewCommandRoot,
+// 		),
+// 	)
+// }

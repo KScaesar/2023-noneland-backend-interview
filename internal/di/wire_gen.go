@@ -19,15 +19,20 @@ import (
 // Injectors from wire.go:
 
 func NewServer(cfg *configs.Config) *http.Server {
-	client := pkg.NewHttpClient()
-	httpExchangeQryService := external.NewHttpExchangeQryService(client, cfg)
 	db := pkg.NewSqliteGorm()
 	gormTransactionBackupRepository := database.NewGormTransactionBackupRepository(db)
+	client := pkg.NewHttpClient()
+	httpExchangeQryService := external.NewHttpExchangeQryService(client, cfg)
 	transactionBackupUseCase := app.NewTransactionBackupUseCase(gormTransactionBackupRepository, httpExchangeQryService)
-	exchangeHandler := api.NewExchangeHandler(httpExchangeQryService, transactionBackupUseCase)
 	userRepository := database.NewUserRepository(db, cfg)
 	userUseCase := app.NewUserUseCase(userRepository)
-	userHandler := api.NewUserHandler(userUseCase)
+	applicationGroup := app.ApplicationGroup{
+		TransactionBackupUseCase: transactionBackupUseCase,
+		ExchangeQryService:       httpExchangeQryService,
+		UserUseCase:              userUseCase,
+	}
+	exchangeHandler := api.NewExchangeHandler(applicationGroup)
+	userHandler := api.NewUserHandler(applicationGroup)
 	handlerGroup := api.HandlerGroup{
 		ExchangeHandler: exchangeHandler,
 		UserHandler:     userHandler,

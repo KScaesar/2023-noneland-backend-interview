@@ -11,19 +11,18 @@ import (
 	"noneland/backend/interview/pkg"
 )
 
-// NewRouter 可用在 httptest.NewServer 進行 integration test
-func NewRouter(cfg *configs.Config, hg HandlerGroup) *gin.Engine {
-	router := gin.New()
-	setupServer(router, cfg)
-	registerRoute(router, hg)
-	return router
+type HandlerGroup struct {
+	*ExchangeHandler
+	*UserHandler
 }
 
-func NewServer(cfg *configs.Config, hg HandlerGroup) *http.Server {
-	router := gin.New()
-	server := setupServer(router, cfg)
-	registerRoute(router, hg)
-	return server
+func registerRoute(router *gin.Engine, handlers HandlerGroup) {
+	v1 := router.Group("/api/v1")
+
+	v1.GET("/hello", handlers.UserHandler.Hello)
+
+	v1.GET("/exchange/summary/balance", handlers.ExchangeHandler.GetSummaryBalance)
+	v1.GET("/exchange/spot/transactions", handlers.ExchangeHandler.GetSpotTransactionRecordAll)
 }
 
 func setupServer(router *gin.Engine, cfg *configs.Config) *http.Server {
@@ -48,16 +47,17 @@ func setupServer(router *gin.Engine, cfg *configs.Config) *http.Server {
 	return s
 }
 
-func registerRoute(router *gin.Engine, hg HandlerGroup) {
-	v1 := router.Group("/api/v1")
-
-	v1.GET("/hello", hg.UserHandler.Hello)
-
-	v1.GET("/exchange/summary/balance", hg.ExchangeHandler.GetSummaryBalance)
-	v1.GET("/exchange/spot/transactions", hg.ExchangeHandler.GetSpotTransactionRecordAll)
+func NewServer(cfg *configs.Config, handlers HandlerGroup) *http.Server {
+	router := gin.New()
+	server := setupServer(router, cfg)
+	registerRoute(router, handlers)
+	return server
 }
 
-type HandlerGroup struct {
-	ExchangeHandler
-	UserHandler
+// NewRouter 可用在 httptest.NewServer 進行 integration test
+func NewRouter(cfg *configs.Config, handlers HandlerGroup) *gin.Engine {
+	router := gin.New()
+	setupServer(router, cfg)
+	registerRoute(router, handlers)
+	return router
 }

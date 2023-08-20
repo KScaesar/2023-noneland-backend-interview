@@ -12,11 +12,13 @@ import (
 )
 
 var (
-	InfrastructureLayer = wire.NewSet(
+	Infrastructure = wire.NewSet(
 		pkg.NewSqliteGorm,
 		pkg.NewHttpClient,
 	)
-	ApplicationLayer = wire.NewSet(
+	Application = wire.NewSet(
+		wire.Struct(new(app.ApplicationGroup), "*"),
+
 		database.NewGormTransactionBackupRepository,
 		wire.Bind(new(entity.TransactionBackupRepository), new(*database.GormTransactionBackupRepository)),
 		app.NewTransactionBackupUseCase,
@@ -28,9 +30,10 @@ var (
 		wire.Bind(new(entity.UserRepository), new(*database.UserRepository)),
 		app.NewUserUseCase,
 	)
-	HttpAdapterLayer = wire.NewSet(
+	HttpAdapter = wire.NewSet(
+		wire.Struct(new(api.HandlerGroup), "*"),
+
 		api.NewExchangeHandler,
 		api.NewUserHandler,
-		wire.Struct(new(api.HandlerGroup), "*"),
 	)
 )
