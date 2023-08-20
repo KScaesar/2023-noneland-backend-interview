@@ -9,7 +9,7 @@ import (
 	"noneland/backend/interview/pkg"
 )
 
-func NewUserHandler(svc app.ApplicationGroup) *UserHandler {
+func NewUserHandler(svc *app.ApplicationGroup) *UserHandler {
 	return &UserHandler{service: svc.UserUseCase}
 }
 

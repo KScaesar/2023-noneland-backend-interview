@@ -28,7 +28,7 @@
 **一般**  
 - [ok] 回傳兩種餘額 `{url}/api/v1/exchange/summary/balance`
    - [impl code](./internal/external/exchange_service.go#L31)
-   - [test code](./internal/api/exchange_test.go#L19)
+   - [test code](./internal/api/exchange_test.go#L20)
 - [▲] 需要顯示 `現貨` 帳戶轉出轉入紀錄 `{url}/api/v1/exchange/spot/transactions`
    - 完成一半, 不了解情境, 無法作答
    - [impl code](./internal/app/tx_backup.go#L27)

@@ -4,8 +4,8 @@ quiet: True
 with-expecter: true
 mockname: "Mock{{.InterfaceName}}"
 filename: "{{.InterfaceName}}.go"
-dir: "internal/mocks"
-outpkg: mocks
+dir: "internal/xMock"
+outpkg: xMock
 
 packages:
   noneland/backend/interview/internal/app:

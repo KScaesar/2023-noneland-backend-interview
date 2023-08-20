@@ -10,7 +10,7 @@ import (
 	"noneland/backend/interview/pkg"
 )
 
-func NewExchangeHandler(svc app.ApplicationGroup) *ExchangeHandler {
+func NewExchangeHandler(svc *app.ApplicationGroup) *ExchangeHandler {
 	return &ExchangeHandler{exService: svc.ExchangeQryService, backupService: svc.TransactionBackupUseCase}
 }
 

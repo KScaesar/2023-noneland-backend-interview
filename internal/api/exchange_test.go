@@ -1,4 +1,4 @@
-package api
+package api_test
 
 import (
 	"net/http"
@@ -10,19 +10,24 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"noneland/backend/interview/configs"
-	"noneland/backend/interview/internal/app"
+	"noneland/backend/interview/internal/api"
+	"noneland/backend/interview/internal/di"
 	"noneland/backend/interview/internal/entity"
-	"noneland/backend/interview/internal/mocks"
+	"noneland/backend/interview/internal/xMock"
 	"noneland/backend/interview/pkg"
 )
 
 func TestExchangeHandler_GetSummaryBalance(t *testing.T) {
 	// arrange
-	cfg := &configs.Config{}
-	mockExService := mocks.NewMockExchangeQryService(t)
-	apps := app.ApplicationGroup{ExchangeQryService: mockExService}
-	handlers := HandlerGroup{ExchangeHandler: NewExchangeHandler(apps)}
-	router := NewRouter(cfg, handlers)
+	cfg := configs.NewConfig("template-dev")
+	cfg.DebugHttp = false
+
+	apps := di.NewApplication(cfg)
+	mockExService := xMock.NewMockExchangeQryService(t)
+	apps.ExchangeQryService = mockExService // comment the row to disable mock
+
+	handlers := di.NewHttpHandler(apps)
+	router := api.NewRouter(cfg, handlers)
 	ts := httptest.NewServer(router)
 	defer ts.Close()
 	returnValue := entity.BalanceResponse{
