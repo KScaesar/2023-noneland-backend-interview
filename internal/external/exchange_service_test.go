@@ -16,12 +16,12 @@ import (
 )
 
 func TestHttpExchangeQryService_GetBalanceByUserId(t *testing.T) {
+	// arrange
 	client := http.DefaultClient
 	cfg := configs.NewConfig("template-dev")
-
+	service3rd := NewHttpExchangeQryService(client, cfg)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-
 	httpmock.RegisterResponder(
 		http.MethodGet,
 		cfg.ExchangeUrl+"/spot/balance",
@@ -33,47 +33,30 @@ func TestHttpExchangeQryService_GetBalanceByUserId(t *testing.T) {
 		httpmock.NewStringResponder(http.StatusOK, `{ "free": "10.145" }`),
 	)
 
-	//
-
-	ctx := context.Background()
-	usrId := ""
-	service := NewHttpExchangeQryService(client, cfg)
-
-	//
-
+	// expect
 	expectedResp := entity.BalanceResponse{
 		SpotFee:    decimal.NewFromFloat32(10.12345),
 		FuturesFee: decimal.NewFromFloat32(10.145),
 	}
 	expectedCallCount := 2
 
-	//
-
-	actualResp, err := service.GetBalanceByUserId(ctx, usrId)
+	// action
+	ctx := context.Background()
+	usrId := ""
+	actualResp, err := service3rd.GetBalanceByUserId(ctx, usrId)
 	actualCallCount := httpmock.GetTotalCallCount()
 
-	//
-
+	// assert
 	require.NoError(t, err)
 	require.Equal(t, expectedResp, actualResp)
 	require.Equal(t, expectedCallCount, actualCallCount)
 }
 
 func TestHttpExchangeQryService_GetTransactionListByUserId(t *testing.T) {
+	// arrange
 	client := http.DefaultClient
 	cfg := configs.NewConfig("template-dev")
-
-	ctx := context.Background()
-	usrId := ""
-	tRange := pkg.TimestampRangeEndTimeLessThan{
-		EndTime: pkg.MockTimeNow("2023-08-19T12:00:00Z")().UnixMilli(),
-	}
-	page := pkg.PageParam{
-		Page: 2,
-		Size: 123,
-	}
-	service := NewHttpExchangeQryService(client, cfg)
-
+	service3rd := NewHttpExchangeQryService(client, cfg)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 	httpmock.RegisterResponder(
@@ -111,6 +94,7 @@ func TestHttpExchangeQryService_GetTransactionListByUserId(t *testing.T) {
 }
 `))
 
+	// expect
 	want := pkg.ListResponse[entity.ExchangeTransactionResponse]{
 		Rows: []entity.ExchangeTransactionResponse{
 			{
@@ -141,16 +125,30 @@ func TestHttpExchangeQryService_GetTransactionListByUserId(t *testing.T) {
 		Total: 3,
 	}
 
-	got, err := service.GetSpotTransactionListByUserId(ctx, usrId, page, tRange)
+	// action
+	ctx := context.Background()
+	usrId := ""
+	page := pkg.PageParam{
+		Page: 2,
+		Size: 123,
+	}
+	tRange := pkg.TimestampRangeEndTimeLessThan{
+		EndTime: pkg.MockTimeNow("2023-08-19T12:00:00Z")().UnixMilli(),
+	}
+	got, err := service3rd.GetSpotTransactionListByUserId(ctx, usrId, page, tRange)
 
+	// assert
 	require.NoError(t, err)
 	require.Equal(t, want, got)
 }
 
 func TestHttpExchangeQryService_transformQueryString(t *testing.T) {
+	// arrange
 	client := http.DefaultClient
 	cfg := configs.NewConfig("template-dev")
+	service3rd := NewHttpExchangeQryService(client, cfg)
 
+	// action
 	tRange := pkg.TimestampRangeEndTimeLessThan{
 		EndTime: pkg.MockTimeNow("2023-08-19T12:00:00Z")().UnixMilli(),
 	}
@@ -158,10 +156,9 @@ func TestHttpExchangeQryService_transformQueryString(t *testing.T) {
 		Page: 2,
 		Size: 123,
 	}
-	service := NewHttpExchangeQryService(client, cfg)
+	got := service3rd.transformQueryString(page, tRange)
 
-	got := service.transformQueryString(page, tRange)
-
+	// assert
 	assert.Equal(t, "2", got.Get("current"))
 	assert.Equal(t, "100", got.Get("size"), "max size only 100")
 	assert.Equal(t, false, got.Has("startTime"))
